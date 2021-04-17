@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<div class="my-4 container">
+<h3 class="my-4 pb-1 text-center">{{product.title}}</h3>
+<div class="row">
+<div class="col-md-6">
+<h3 class="mt-2" align="center">{{product.title}}</h3>
+<div class="card shadow"><img src="{{product.image.url}}" alt="{{product.title}}" height=300px></div>
+<div class="row">
+{% for pi in product.productimage_set.all %}
+<div class="col-md-4">
+<div class="card shadow mt-2"><img src="{{pi.image.url}}" class="image-fluid" height=200px style="object-fit:contain;"> </div>
+</div>
+{% endfor %}
+</div>
+<h4 class="text-center">Price:<strike><font color="red">RS{{product.mark_price}}</font></strike>&nbsp;<font color="green">Rs {{product.sell_price}}</font></h4>
+</div>
+<div class="col-md-6">
+<div class="card-header"><font color="brown">{{product.title}}</font> Viewed:{{product.viewcount}}</div>
+<div class="card-header">Category:{{product.category.title}}</div>
+<div class="card-header">Warranty:{{product.warranty}}</div>
+<div class="card-header">Return Policy:{{product.return_policy}}</div>
+<a href="{% url 'cart_add' product.id %}" class="btn btn-success mt-3">AddToCart</a>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<h5>Description:</h5>
+<p>{{product.description}}</p>
+</div>
+
+<div class="row">
+<h3>Related Products</h3>
+{% for p in related %}
+<div class="col-md-3 mb-4">
+<div class="card shadow">
+<a href="{% url 'product_detail' p.slug %}" class="my-2"><img src="{{p.image.url}}" alt="post_list.title" height=150px></a>
+</div>
+<div class="card-body">
+<a href="{% url 'product_detail' p.slug %}">{{p.title}}</a>
+<h6><strike><font color="red">Rs {{p.mark_price}}</font></strike>&nbsp;<font color="green">Rs {{p.sell_price}}</font>
+</h6>
+</div>
+</div>
+{% endfor %}
+</div>
+
+</div>
+</div>
+{% endblock %}

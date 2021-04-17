@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<main class="my-4 container">
+<h3 class="my-4 pb-1 text-center">Our Products</h3>
+<div class="row">
+{% for p in product_list %}
+<div class="col-md-3 mb-4">
+<div class="card shadow">
+<a href="{% url 'product_detail' p.slug %}" class="my-2"><img src="{{p.image.url}}" alt="post_list.title" height=150px></a>
+</div>
+<div class="card-body">
+<a href="{% url 'product_detail' p.slug %}">{{p.title}}</a>
+<h6><strike><font color="red">Rs {{p.mark_price}}</font></strike>&nbsp;<font color="green">Rs {{p.sell_price}}</font>
+<a href="{% url 'cart_add' p.id %}" class="btn btn-success mt-3">AddToCart</a>
+</h6>
+</div>
+</div>
+{% endfor %}
+</div>
+<ul class="pagination">
+{% if product_list.has_previous %}
+<li class="page-item">
+<a href="?page=1" class="page-link">First</a>
+</li>
+<li class="page-item">
+<a href="?page={{product_list.previous_page_number}}" class="page-link">Previous</a>
+</li>
+{% endif %}
+{% if product_list.has_next %}
+<li class="page-item">
+<a href="?page={{product_list.next_page_number}}" class="page-link">Next></a>
+</li>
+<li class="page-item">
+<a href="?page={{product_list.paginator.num_pages}}" class="page-link">Last>></a>
+</li>
+{% endif %}
+</ul>
+</main>
+{% endblock %}
